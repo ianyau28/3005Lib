@@ -8,3 +8,5 @@ Instructions:
 Resources:
 Using https://blog.logrocket.com/nodejs-expressjs-postgresql-crud-rest-api-example/#creatingarole
 This might be helpful later https://www.tothenew.com/blog/connect-to-postgresql-using-javascript/
+
+Current Report: https://docs.google.com/document/d/1EgBtlx645l__exw63u0DvJFB0yt5lYtTCUEesWiS4zo/edit#
