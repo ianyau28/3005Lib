@@ -4,7 +4,7 @@ const pug = require('pug');
 const app = express();
 const session = require('express-session');
 const db = require('./queries');
-const { getInstruc } = require('./queries');
+const { getInstruc, getBooks } = require('./queries');
 
 
 app.use (express.urlencoded({
@@ -19,7 +19,7 @@ app.use("/", session({secret: 'something here', loggedIn: false, cookie:{ maxAge
 
 // app.use("/movies", movieRouter);
 
-app.get("/dude", getInstruc);
+app.get("/dude", getBooks);
 
 app.use(express.static("public"));
 

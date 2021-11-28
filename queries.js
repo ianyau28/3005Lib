@@ -9,8 +9,8 @@ const client = new Client({
 })
 client.connect();
 
-const getInstruc = (request, response) => {
-  client.query(`Select * from instructor`, (err, res)=>{
+const getBooks = (request, response) => {
+  client.query(`Select * from Book`, (err, res)=>{
     if(err){
       throw err
     }else{
@@ -20,5 +20,5 @@ const getInstruc = (request, response) => {
 }
 
 module.exports = {
-  getInstruc
+  getBooks
 }
