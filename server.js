@@ -13,11 +13,7 @@ app.use("/", session({secret: 'something here', loggedIn: false, cookie:{ maxAge
 
 
 const bookRouter = require("./routers/book-router");
-// const reviewRouter = require("./routers/review-router");
-// const personRouter = require("./routers/person-router");
-// const userRouter = require("./routers/user-router");
 
-// app.use("/movies", movieRouter);
 app.use("/books", bookRouter);
 app.get("/dude", getBooks);
 

@@ -1,0 +1,71 @@
+body {
+  font-family: 'Courier New', Courier, monospace;
+  background-color: cornsilk;
+}
+
+#nav_bar{
+  overflow: hidden;
+}
+#nav_bar a{
+  padding: 5px;
+  text-align: center;
+}
+#rightside{
+  font-size: 13px;
+  float: right;
+  margin: 10px;
+}
+#rightside p{
+  font-size: 13px;
+  margin: 0 5%;
+  text-align: center;
+}
+.userinput{
+  padding: 10px;
+}
+
+#login{
+  text-align: center;
+}
+#loginsquare{
+  text-align: center;
+  border: black 1px solid;
+  display:inline-block;
+  width: 50%;
+}
+/* #loginsquare input{
+  width: 50%;
+} */
+#loggingIn{
+  width: 25%;
+}
+
+.index_books{
+  display:grid;
+  grid-column-gap: 50px;
+  grid-template-columns: auto auto auto;
+  padding: 10px;
+}
+
+.index_book_column{
+  padding: 20px;
+  text-align: center;
+}
+
+.index_book_column a{
+ margin: 0 auto;
+}
+#page {
+  display: none;
+}
+#directorIds {
+  display: none;
+}
+
+#actorIds {
+  display: none;
+}
+
+#writerIds {
+  display: none;
+}

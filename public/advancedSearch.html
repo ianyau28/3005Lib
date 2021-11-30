@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <Title>Sign Up</Title>
+        <link href=style.css rel=stylesheet>
+    </head>
+    <body>
+        <div id ="nav_bar">
+            <a href= "/">Home</a>
+            <a href= "/books">Browse</a>
+            <a href= "/orders">My Orders</a>
+            <div id="rightside">
+                <a href= "/users/log">Login/logout</a>
+            </div>
+        </div>
+        <form method="get" id="advancedSearch" action="/books">
+            <h1>Advanced Search:</h1>
+            <hr>
+            <h4>Book ISBN:</h4>
+            <input type="text" onfocus="this.value=''" name="ISBN" value="ISBN...">
+
+            <h4>Book Title:</h4>
+            <input type="text" onfocus="this.value=''" name="Title" value="Book Title...">
+
+            <h4>Author Name:</h4>
+            <input type="text" onfocus="this.value=''" name="Name" value="Author Name...">
+            <hr>
+
+            <h4>Publisher Name:</h4>
+            <input type="text" onfocus="this.value=''" name="Publisher" value="Publisher Name...">
+            <hr>
+
+            <h4>Genre</h4>
+            <input type="text" onfocus="this.value=''" name="Genre" value="Genres...">
+            <hr>
+            <input id="page" type="text" name="page" value="1">
+        
+            <!-- creates new id in the real thing, right now it is just hard coding-->
+            <button type="submit">Search</button>
+        </form>
+    </body>
+</html>
