@@ -1,3 +1,4 @@
+drop table Genre;
 drop table Book_order;
 drop table phone_numbers;
 drop table Book_author;
@@ -84,6 +85,14 @@ create table Book_author
 	foreign key (ISBN) references Book
 	 	on delete cascade,
 	foreign key (author_id) references Author
+	 	on delete cascade
+	);
+
+create table Genre
+	(ISBN	varchar(13),
+	name	varchar(15),
+	primary key (ISBN, name),
+	foreign key (ISBN) references Book
 	 	on delete cascade
 	);
 	
