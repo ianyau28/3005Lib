@@ -1,0 +1,125 @@
+body {
+  font-family: 'Courier New', Courier, monospace;
+  background-color: cornsilk;
+}
+.columns {
+  display: flex;
+}
+.description {
+  width: 60%;
+  margin: 0 3%;
+}
+.actor-section {
+  margin: 0 3%;
+  width: 30%
+}
+.worked {
+  margin: 0 3%;
+  width: 50%
+}
+
+.comment {
+  border: black 1px solid;
+  padding: 1%;
+}
+
+.innercomment{
+  display: flex;
+}
+
+.innercomment img{
+  width: 70px;
+  height: 70px;
+  object-fit: cover;
+  padding: 0 2% 0 0;
+}
+.people {
+  display: flex;
+}
+#add_comment {
+  margin: 1%;
+  font-size: 13px;
+  font-family: 'Courier New', Courier, monospace;
+}
+.user_name{
+  text-decoration: none;
+  color: black;
+}
+
+#watchlist_button{
+  margin: 1%;
+  font-size: 13px;
+  font-family: 'Courier New', Courier, monospace;
+}
+
+#nav_bar{
+  overflow: hidden;
+}
+#nav_bar a{
+  padding: 5px;
+  text-align: center;
+}
+#rightside{
+  font-size: 13px;
+  float: right;
+  margin: 10px;
+}
+#rightside p{
+  font-size: 13px;
+  margin: 0 5%;
+  text-align: center;
+}
+.userreview{
+  padding: 5px;
+  border: black 1px solid;
+}
+
+.banner{
+  text-align: center;
+}
+.searcharea{
+  width: 70%;
+  height: 10%;
+  text-align: center;
+  display:inline-block;
+
+}
+#searchbar{
+  width:80%;
+}
+#search{
+  width:10%;
+}
+.browseArea{
+  width:90%;
+  text-align: center;
+}
+
+.moviebrowse{
+  width:100%;
+  border: black 1px solid;
+  display:flex;
+}
+
+.pages{
+  display: none;
+}
+
+.index_movies{
+  display:grid;
+  grid-column-gap: 50px;
+  grid-template-columns: auto auto auto;
+  padding: 10px;
+}
+
+.index_movie_column{
+  padding: 20px;
+  text-align: center;
+}
+
+.index_movie_column a{
+ margin: 0 auto;
+}
+.invis{
+  display: none;
+}

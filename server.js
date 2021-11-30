@@ -3,8 +3,7 @@ const path = require('path');
 const pug = require('pug');
 const app = express();
 const session = require('express-session');
-const db = require('./queries');
-const { getInstruc, getBooks } = require('./queries');
+const { getBooks } = require('./queries');
 
 
 app.use (express.urlencoded({
@@ -12,13 +11,14 @@ app.use (express.urlencoded({
   }));
 app.use("/", session({secret: 'something here', loggedIn: false, cookie:{ maxAge: 3600000 }}))
 
-// const movieRouter = require("./routers/movie-router");
+
+const bookRouter = require("./routers/book-router");
 // const reviewRouter = require("./routers/review-router");
 // const personRouter = require("./routers/person-router");
 // const userRouter = require("./routers/user-router");
 
 // app.use("/movies", movieRouter);
-
+app.use("/books", bookRouter);
 app.get("/dude", getBooks);
 
 app.use(express.static("public"));
