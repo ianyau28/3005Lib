@@ -58,10 +58,60 @@ const getBookAuthors = (request, callback) => {
   })
 }
 
+const addUser = (request, callback) =>{
+  console.log([request.username, request.email, request.phonenumber, request.password])
+  client.query(`INSERT INTO Users (user_id, email_address, phone_number, password) VALUES ($1, $2, $3, $4)`, [request.username, request.email, request.phonenumber, request.password], (err, res)=>{
+    if(err){
+      callback("INVALID")
+    }else{
+      console.log("YOYOYO")
+      callback(request.username)
+    }
+  })
+}
+
+const login = (request, callback) =>{
+  client.query(`SELECT user_id FROM Users WHERE user_id = $1 AND password = $2`, [request.username, request.password], (err, res)=>{
+    if(err){
+      throw(err)
+    }else{
+      console.log(res.rows);
+      if (res.rows.length > 0){
+        callback(res.rows[0].user_id)
+      }else{
+        callback("")
+      }
+    }
+  })
+}
+
+const getUser = (request, callback) =>{
+  client.query(`SELECT * FROM Users WHERE user_id = $1`, [request.username], (err, res)=>{
+    if(err){
+      throw(err)
+    }else{
+      callback(res.rows[0])
+    }
+  })
+}
+
+const getUserOrders = (request, callback) =>{
+  client.query(`SELECT * FROM Orders WHERE user_id = $1`, [request.username], (err, res)=>{
+    if(err){
+      throw(err)
+    }else{
+      callback(res.rows)
+    }
+  })
+}
 module.exports = {
   getBooks,
   getBooksQuery,
   getBookById,
   getBookGenres,
-  getBookAuthors
+  getBookAuthors,
+  addUser,
+  login,
+  getUser,
+  getUserOrders
 }
