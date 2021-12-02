@@ -13,7 +13,11 @@ html
             | Title: 
             a(href="/books/" + book.isbn) #{book.name}
             |
-            p Price: #{book.price}
+            p Price: $#{book.price}
+
+        hr
+
+        p Total: #{total}
 
 
 

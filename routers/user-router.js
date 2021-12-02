@@ -1,7 +1,7 @@
 const express = require('express');
 const pug = require('pug');
 let userRouter = express.Router();
-const { addUser, login, getUser, getUserOrders, getSpecificBooks } = require('../queries');
+const { addUser, login, getUser, getUserOrders, getSpecificBooks, getPriceOfSpecificBooks } = require('../queries');
 const session = require('express-session');
 
 
@@ -34,6 +34,7 @@ userRouter.get("/log", function(req, res){
     if (req.session.loggedIn){
         req.session.loggedIn = false;
         req.session.userid = '';
+        req.session.cart = [];
         console.log("Logged Out");
         res.redirect("/");
     }else{
@@ -59,8 +60,6 @@ userRouter.get("/login", function(req, res){
         }else{
             res.redirect("/login.html")
         }
-        
-        
     });
 });
 
@@ -118,12 +117,22 @@ userRouter.get("/removecart/:cid", function(req, res){
 });
 
 userRouter.get("/cart", function(req, res){
+  if (req.session.loggedIn){
+    //alert("Please log in first!");
     if (req.session.cart == null){
       req.session.cart = [];
     }
     getSpecificBooks(req.session.cart, function(books){
-      res.send(pug.renderFile("views/pages/cart.pug", {cart: books}));
+      getPriceOfSpecificBooks(req.session.cart, function(price){
+        if (price.length == 0){
+          price[0] = {total_price: 0.00}
+        }
+        res.send(pug.renderFile("views/pages/cart.pug", {cart: books, total: price[0].total_price}));
+      });
     });
+  }else{
+    res.redirect('/login.html');
+  }
 });
 
 
