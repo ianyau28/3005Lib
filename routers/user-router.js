@@ -25,8 +25,7 @@ userRouter.post("/", function(req, res){
             console.log(user);
             req.session.userid = user;
             req.session.loggedIn = true;
-            res.redirect("/dude");
-            //res.send(pug.renderFile("views/pages/ownprofile.pug", {user: req.user, recommened: req.recommened, followuser: req.users, followpeople: req.people, watchlist: req.watch, reviews: req.reviews}));
+            res.redirect("/users/me");
           }
         });
 });
@@ -49,15 +48,13 @@ userRouter.get("/log", function(req, res){
 // });
 
 userRouter.get("/login", function(req, res){
-    // console.log(req.query.username);
-    // console.log(req.query.password)
+
     login(req.query, function(user){
         console.log(user)
         if (user.length > 0){
             console.log("LOGGING IN...");
             req.session.loggedIn = true;
             req.session.userid = user;
-            //res.redirect("/users/me");
             res.redirect("/users/me");
         }else{
             res.redirect("/login.html")
@@ -79,6 +76,21 @@ userRouter.get("/me", function(req, res){
         //alert("Please log in first!");
         res.redirect('/login.html');
     }
+});
+
+userRouter.param("cid", function(req, res, next, cid){
+  req.cartBook = cid;
+  next()
+});
+
+userRouter.get("/cart/:cid", function(req, res){
+    console.log(req.session)
+    if (req.session.cart == null){
+      req.session.cart  = [req.cartBook]
+    }else{
+      req.session.cart.push(req.cartBook)
+    }
+    res.redirect('/books/' + req.cartBook);
 });
 
 

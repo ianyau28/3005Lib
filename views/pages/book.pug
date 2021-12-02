@@ -10,7 +10,7 @@ html
         p ISBN: #{book.isbn}
 
         p Pages: #{book.number_pages}
-        
+
         p
         | Author: 
 
@@ -27,6 +27,9 @@ html
             if index !== genres.length-1
                 | , 
         |
+
+        form(method="get" action="/users/cart/" + book.isbn)
+          input(type="submit", value="Add to cart")
 
 
 

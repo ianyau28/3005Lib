@@ -9,7 +9,7 @@ const { getBooks , getBooksQuery } = require('./queries');
 app.use (express.urlencoded({
     extended: true
   }));
-app.use("/", session({secret: 'something here', loggedIn: false, user_id: null, cart: [], cookie:{ maxAge: 3600000 }}))
+app.use("/", session({secret: 'something here', loggedIn: false, user_id: '', cart: [], cookie:{ maxAge: 3600000 }}))
 
 
 const bookRouter = require("./routers/book-router");
