@@ -86,7 +86,7 @@ const login = (request, callback) =>{
 }
 
 const getUser = (request, callback) =>{
-  client.query(`SELECT * FROM Users WHERE user_id = $1`, [request.username], (err, res)=>{
+  client.query(`SELECT * FROM Users WHERE user_id = $1`, [request], (err, res)=>{
     if(err){
       throw(err)
     }else{
@@ -96,7 +96,7 @@ const getUser = (request, callback) =>{
 }
 
 const getUserOrders = (request, callback) =>{
-  client.query(`SELECT * FROM Orders WHERE user_id = $1`, [request.username], (err, res)=>{
+  client.query(`SELECT * FROM Orders WHERE user_id = $1`, [request], (err, res)=>{
     if(err){
       throw(err)
     }else{
@@ -104,6 +104,7 @@ const getUserOrders = (request, callback) =>{
     }
   })
 }
+
 module.exports = {
   getBooks,
   getBooksQuery,

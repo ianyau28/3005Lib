@@ -1,7 +1,7 @@
 const express = require('express');
 const pug = require('pug');
 let userRouter = express.Router();
-const { addUser, login } = require('../queries');
+const { addUser, login, getUser, getUserOrders } = require('../queries');
 const session = require('express-session');
 
 
@@ -49,8 +49,8 @@ userRouter.get("/log", function(req, res){
 // });
 
 userRouter.get("/login", function(req, res){
-    console.log(req.query.username);
-    console.log(req.query.password)
+    // console.log(req.query.username);
+    // console.log(req.query.password)
     login(req.query, function(user){
         console.log(user)
         if (user.length > 0){
@@ -68,10 +68,12 @@ userRouter.get("/login", function(req, res){
 });
 
 userRouter.get("/me", function(req, res){
-
     if (req.session.loggedIn){
         getUser(req.session.userid, function(user){
-            
+          getUserOrders(req.session.userid, function(orders){
+            console.log(user)
+            res.send(pug.renderFile("views/pages/ownprofile.pug", {user: user, orders: orders}));
+          })
         });
     }else{
         //alert("Please log in first!");

@@ -1,0 +1,24 @@
+html
+    head
+        style
+            include ../../style.css
+    body
+        include ../partials/navbar
+
+        h1 Username: #{user.user_id}
+        
+        hr
+
+        p Email: #{user.email_address}
+        p Phone Number: #{user.phone_number}
+
+        hr
+
+        | Orders:
+
+        each order, index in orders
+            a(href="/orders/" + order.order_id) #{order.order_id}
+            if index !== order.length-1
+                | , 
+        |
+

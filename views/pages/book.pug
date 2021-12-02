@@ -10,21 +10,20 @@ html
         p ISBN: #{book.isbn}
 
         p Pages: #{book.number_pages}
-
-        hr
-        p Author: 
+        
+        p
+        | Author: 
 
         each a, index in authors
-            p #{a.name}
+            | #{a.name}
             if index !== authors.length-1
                 | , 
 
-        |
-        hr
+        p
         | Genre: 
 
         each g, index in genres
-            p #{g.name}
+            | #{g.name}
             if index !== genres.length-1
                 | , 
         |
