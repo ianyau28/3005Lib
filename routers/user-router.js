@@ -1,7 +1,7 @@
 const express = require('express');
 const pug = require('pug');
 let userRouter = express.Router();
-const { addUser, login, getUser, getUserOrders } = require('../queries');
+const { addUser, login, getUser, getUserOrders, getSpecificBooks } = require('../queries');
 const session = require('express-session');
 
 
@@ -83,14 +83,47 @@ userRouter.param("cid", function(req, res, next, cid){
   next()
 });
 
-userRouter.get("/cart/:cid", function(req, res){
-    console.log(req.session)
+userRouter.get("/addcart/:cid", function(req, res){
+    let flag = true;
     if (req.session.cart == null){
       req.session.cart  = [req.cartBook]
     }else{
-      req.session.cart.push(req.cartBook)
+      for (let i = 0; i < req.session.cart.length; i++){
+        if (req.session.cart[i].isbn === req.cartBook){
+          flag = false;
+          break;
+        }
+      }
+      if (flag){
+        req.session.cart.push(req.cartBook)
+      }
     }
+    console.log(req.session.cart)
     res.redirect('/books/' + req.cartBook);
+});
+
+userRouter.get("/removecart/:cid", function(req, res){
+  console.log("HERE")
+  if (req.session.cart != null){
+    for (let i = 0; i < req.session.cart.length; i++){
+      if (req.session.cart[i] === req.cartBook){
+
+        req.session.cart.splice(i, 1);
+        break;
+      }
+    }
+  }
+  console.log(req.session.cart)
+  res.redirect('/books/' + req.cartBook);
+});
+
+userRouter.get("/cart", function(req, res){
+    if (req.session.cart == null){
+      req.session.cart = [];
+    }
+    getSpecificBooks(req.session.cart, function(books){
+      res.send(pug.renderFile("views/pages/cart.pug", {cart: books}));
+    });
 });
 
 

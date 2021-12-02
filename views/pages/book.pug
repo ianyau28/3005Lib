@@ -27,9 +27,12 @@ html
             if index !== genres.length-1
                 | , 
         |
-
-        form(method="get" action="/users/cart/" + book.isbn)
-          input(type="submit", value="Add to cart")
+        if !alreadyincart
+          form(method="get" action="/users/addcart/" + book.isbn)
+            input(type="submit", value="Add to cart")
+        else
+          form(method="get" action="/users/removecart/" + book.isbn)
+            input(type="submit", value="Remove from cart")
 
 
 

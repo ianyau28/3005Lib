@@ -105,6 +105,26 @@ const getUserOrders = (request, callback) =>{
   })
 }
 
+const getSpecificBooks = (request, callback) =>{
+  console.log(request);
+  if (request.length == 0){
+    callback([])
+  }else{
+    let query = `SELECT * FROM Book WHERE isbn = $1`;
+    for (i = 2; i <= request.length; i++){
+      query = `${query} OR isbn = $${i}`
+    }
+    // console.log(query);
+    client.query(query, request, (err, res)=>{
+      if(err){
+        throw(err)
+      }else{
+        callback(res.rows)
+      }
+    })
+  }
+}
+
 module.exports = {
   getBooks,
   getBooksQuery,
@@ -114,5 +134,6 @@ module.exports = {
   addUser,
   login,
   getUser,
-  getUserOrders
+  getUserOrders,
+  getSpecificBooks
 }

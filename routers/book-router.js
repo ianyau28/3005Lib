@@ -34,7 +34,15 @@ bookRouter.param("bid", function(req, res, next, bid){
 
 
 bookRouter.get("/:bid", function(req, res, next){
-  res.send(pug.renderFile("views/pages/book.pug", {book: req.book, genres: req.genres, authors: req.authors}));
+  let flag = false;
+  if (req.session.cart != null){
+    for (let i = 0; i<req.session.cart.length; i++){
+      if (req.session.cart[i] === req.book.isbn){
+        flag = true
+      }
+    }
+  }
+  res.send(pug.renderFile("views/pages/book.pug", {book: req.book, genres: req.genres, authors: req.authors, alreadyincart: flag}));
 });
 
 module.exports = bookRouter;
