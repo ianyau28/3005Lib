@@ -51,7 +51,6 @@ userRouter.get("/log", function(req, res){
 userRouter.get("/login", function(req, res){
 
     login(req.query, function(user){
-        console.log(user)
         if (user.length > 0){
             console.log("LOGGING IN...");
             req.session.loggedIn = true;

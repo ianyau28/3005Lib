@@ -10,8 +10,6 @@ bookRouter.get("/", function(req,res){
     if (Object.keys(req.query).length === 0){
         res.send(pug.renderFile("views/pages/browse.pug", {}));
     }else{
-        console.log(req.query);
-
         getBooksQuery(req.query, function(books){
             res.send(pug.renderFile("views/pages/browse.pug", {search: books}));
         });

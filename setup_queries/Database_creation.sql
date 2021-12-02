@@ -12,14 +12,14 @@ drop table Users;
 
 
 create table Author
-	(author_id		varchar(10),
+	(author_id		SERIAL,
 	 name		varchar(25),
 	 email		varchar(25),
 	 primary key (author_id)
 	);
 	
 create table Publisher
-	(publisher_id		varchar(10),
+	(publisher_id		SERIAL,
 	 name		varchar(50),
 	 address		varchar(50),
 	 email_address		varchar(25),
@@ -36,7 +36,7 @@ create table Users
 	);
 
 create table Orders
-	(order_id		varchar(10),
+	(order_id		SERIAL,
 	 user_id		varchar(10),
 	 destination	varchar (50),
 	 current_location	varchar(50),
@@ -49,7 +49,7 @@ create table Orders
 create table Book
 	(ISBN		varchar(13),
 	 name		varchar(50),
-	 publisher_id	varchar (10),
+	 publisher_id	SERIAL,
 	 number_pages	numeric(4,0),
 	 price	numeric(5,2),
 	 publisher_cut	numeric(3,3),
@@ -61,7 +61,7 @@ create table Book
 	);
 
 create table Book_order
-	(order_id	varchar(10),
+	(order_id	SERIAL,
 	ISBN	varchar(13),
 	primary key (order_id, ISBN),
 	foreign key (order_id) references Orders
@@ -71,7 +71,7 @@ create table Book_order
 	);
 	
 create table phone_numbers
-	(publisher_id	varchar(10),
+	(publisher_id	SERIAL,
 	phone_number	varchar(11),
 	primary key (publisher_id, phone_number),
 	foreign key (publisher_id) references Publisher
@@ -80,7 +80,7 @@ create table phone_numbers
 
 create table Book_author
 	(ISBN	varchar(13),
-	author_id	varchar(10),
+	author_id	SERIAL,
 	primary key (ISBN, author_id),
 	foreign key (ISBN) references Book
 	 	on delete cascade,

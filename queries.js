@@ -59,7 +59,6 @@ const getBookAuthors = (request, callback) => {
 }
 
 const addUser = (request, callback) =>{
-  console.log([request.username, request.email, request.phonenumber, request.password])
   client.query(`INSERT INTO Users (user_id, email_address, phone_number, password) VALUES ($1, $2, $3, $4)`, [request.username, request.email, request.phonenumber, request.password], (err, res)=>{
     if(err){
       callback("INVALID")
@@ -75,7 +74,6 @@ const login = (request, callback) =>{
     if(err){
       throw(err)
     }else{
-      console.log(res.rows);
       if (res.rows.length > 0){
         callback(res.rows[0].user_id)
       }else{
@@ -106,7 +104,6 @@ const getUserOrders = (request, callback) =>{
 }
 
 const getSpecificBooks = (request, callback) =>{
-  console.log(request);
   if (request.length == 0){
     callback([])
   }else{
@@ -126,7 +123,6 @@ const getSpecificBooks = (request, callback) =>{
 }
 
 const getPriceOfSpecificBooks = (request, callback) =>{
-  console.log(request);
   if (request.length == 0){
     callback([])
   }else{
