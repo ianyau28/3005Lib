@@ -34,11 +34,10 @@ bookRouter.param("bid", function(req, res, next, bid){
 
 
 bookRouter.get("/:bid", function(req, res, next){
-  // res.send("GET /movie/" + req.params.mid);
-  console.log("HEY");
-  console.log(req.book);
-  console.log(req.authors);
-  console.log(req.genres);
+  // console.log("HEY");
+  // console.log(req.book);
+  // console.log(req.authors);
+  // console.log(req.genres);
   res.send(pug.renderFile("views/pages/book.pug", {book: req.book, genres: req.genres, authors: req.authors}));
 });
 
