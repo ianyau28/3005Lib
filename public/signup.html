@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <Title>Sign Up</Title>
+        <link href=style.css rel=stylesheet>
+    </head>
+    <body>
+        <div id ="nav_bar">
+          <a href= "/">Home</a>
+          <a href= "/books">Browse</a>
+          <a href= "/orders">My Orders</a>
+          <div id="rightside">
+              <a href= "/users/log">Login/logout</a>
+          </div>
+        </div>
+        <div id ="login">
+            <div id="loginsquare">
+                <h1>Sign Up</h1>
+                <form method="post" id="SignUp" action="/users">
+                    <div class= "userinput">
+                        <p>Username:</p>
+                        <input type="text" onfocus="this.value=''" name ="username" id="username" value="Username...">
+                    </div>
+                    <div class= "userinput">
+                      <p>Email:</p>
+                      <input type="text" onfocus="this.value=''" name ="email" id="email" value="Email...">
+                    </div>
+                    <div class= "userinput">
+                      <p>Phone Number:</p>
+                      <input type="text" onfocus="this.value=''" name ="phonenumber" id="phonenumber" value="Phone Number...">
+                    </div>
+                    <div class= "userinput">
+                        <p>Password:</p>
+                        <input type="text" onfocus="this.value=''" name ="password" id="password" value="Password...">
+                    </div>
+
+
+                    <div class= "userinput">
+                            <button type="submit">Sign up</button>
+                    </div>
+                </form>
+                <div class= "userinput">
+                    <a href="/login.html">Log In</a>
+                </div>
+
+            </div>
+        </div>
+    </body>
+</html>

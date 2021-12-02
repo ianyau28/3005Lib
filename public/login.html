@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <Title>Login</Title>
+        <link href=style.css rel=stylesheet>
+    </head>
+    <body>
+      <div id ="nav_bar">
+        <a href= "/">Home</a>
+        <a href= "/books">Browse</a>
+        <a href= "/orders">My Orders</a>
+        <div id="rightside">
+            <a href= "/users/log">Login/logout</a>
+        </div>
+      </div>
+        <div id ="login">
+            <div id="loginsquare">
+
+                <h1>Login</h1>
+                <form method="get" id="LogIn" action="/users/login">
+                    <div class= "userinput">
+                        <p>Username:</p>
+                        <input type="text" onfocus="this.value=''" name="username" value="Username...">
+                    </div>
+                    <div class= "userinput">
+                        <p>Password:</p>
+                        <input type="text" onfocus="this.value=''" name="password" value="Password...">
+                    </div>
+
+                    <div class= "userinput">
+                        
+                            <button type="submit">Log In</button>
+                        
+                    </div>
+                </form>
+                
+
+                <div class= "userinput">
+                    <a href="/signup.html">Create an Account</a>
+                </div>
+            </div>
+        </div>
+    </body>
+</html>

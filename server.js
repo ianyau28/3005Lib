@@ -3,7 +3,7 @@ const path = require('path');
 const pug = require('pug');
 const app = express();
 const session = require('express-session');
-const { getBooks } = require('./queries');
+const { getBooks , getBooksQuery } = require('./queries');
 
 
 app.use (express.urlencoded({

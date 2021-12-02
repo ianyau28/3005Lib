@@ -1,0 +1,35 @@
+html
+    head
+        style
+            include ../../style.css
+    body
+        include ../partials/navbar
+
+        h1 #{book.name}
+
+        p ISBN: #{book.isbn}
+
+        p Pages: #{book.number_pages}
+
+        hr
+        p Author: 
+
+        each a, index in authors
+            p #{a.name}
+            if index !== authors.length-1
+                | , 
+
+        |
+        hr
+        | Genre: 
+
+        each g, index in genres
+            p #{g.name}
+            if index !== genres.length-1
+                | , 
+        |
+
+
+            
+
+

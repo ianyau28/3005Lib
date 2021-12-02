@@ -9,70 +9,17 @@ html
 
 
                 form(action= '/books', id="searchform", method="GET")
-                    input(type="text" onfocus="this.value=''" id="searchbar" name="Title" value="Search for a Book...")
-                    div.pages
-                        input(type="text" name="page" value="1")
+                    input(type="text" onfocus="this.value=''" id="searchbar" name="Title" value="Search for a book title...")
 
                     input(type = "submit" id="search" value="Search")
             a(href="/advancedSearch.html") advanced search
                     
             
             if search !== NULL
-                div.browseArea
+                div
                     each book in search
                         div.bookbrowse
-                            div
-                                a(href= "/books/" + book.ISBN) #{book.Title}
-                                p ISBN: #{book.ISBN}
-            div
-                if prev
-                    button(onclick = 'prevbutton()') prev
-                if next
-                    button(onclick = 'nextbutton()') next
-
-script.
-    var prevbutton = function() {
-        console.log(window.location.href);
-        url = window.location.href;
-        var n = url.indexOf("page=");
-        n = n+5;
-        let number = ""
-        while (url.charAt(n) >= '0' && url.charAt(n) <= '9') {
-            number = number + url.charAt(n);
-            n++;
-        }
-
-        let newurl = url.substring(0, url.indexOf("page=")+5);
-        //console.log(n);
-        //console.log(number);
-        number = parseInt(number)-1;
-        newurl = newurl.concat(number.toString());
-        //console.log(url.substring(n));
-        newurl = newurl.concat(url.substring(n));
-        //console.log(newurl);
-        window.location = newurl;
-    }   
-    var nextbutton = function() {
-        console.log(window.location.href);
-        url = window.location.href;
-        var n = url.indexOf("page=");
-        n = n+5;
-        let number = ""
-        while (url.charAt(n) >= '0' && url.charAt(n) <= '9') {
-            number = number + url.charAt(n);
-            n++;
-        }
-
-        let newurl = url.substring(0, url.indexOf("page=")+5);
-        //- console.log(newurl);
-        //- console.log(n);
-        //- console.log(number);
-        number = parseInt(number)+1;
-        newurl = newurl.concat(number.toString());
-        console.log(url.substring(n));
-        newurl = newurl.concat(url.substring(n));
-        console.log(newurl);
-        window.location = newurl;
-    } 
-
-        
+                            div.books
+                                a(href= "/books/" + book.isbn) #{book.name}
+                                p ISBN: #{book.isbn}
+                                

@@ -90,34 +90,31 @@ body {
 #search{
   width:10%;
 }
-.browseArea{
-  width:90%;
-  text-align: center;
-}
 
-.moviebrowse{
+
+.bookbrowse{
   width:100%;
   border: black 1px solid;
-  display:flex;
+  padding: 5px;
 }
 
 .pages{
   display: none;
 }
 
-.index_movies{
+.index_books{
   display:grid;
   grid-column-gap: 50px;
   grid-template-columns: auto auto auto;
   padding: 10px;
 }
 
-.index_movie_column{
+.index_book_column{
   padding: 20px;
   text-align: center;
 }
 
-.index_movie_column a{
+.index_book_column a{
  margin: 0 auto;
 }
 .invis{
