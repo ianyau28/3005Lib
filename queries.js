@@ -142,32 +142,37 @@ const getPriceOfSpecificBooks = (request, callback) =>{
 }
 
 const addOrder = (request, callback) =>{
-  client.query(`INSERT INTO Users (user_id, destination, current_location, date_of_order) VALUES ($1, $2, $3, $4)`, [request.user_id, request.destination, request.current_location, request.date_of_order], (err, res)=>{
+  console.log(request)
+  client.query(`INSERT INTO Orders (user_id, destination, current_location, date_of_order) VALUES ($1, $2, $3, $4) RETURNING order_id`, [request.user_id, request.destination, request.current_location, request.date_of_order], (err, res)=>{
     if(err){
       callback("INVALID")
     }else{
-      console.log(res)
-      callback(res.order_id)
+      callback(res.rows[0].order_id)
     }
   })
 }
 
 const addBooksInOrder = (request, callback) =>{
-  let query =``;
+  if (request.length == 1){
+    callback([])
+  }else{
+    console.log(request);
+    let query =`INSERT INTO Book_order (order_id, isbn) 
+    SELECT $1, isbn FROM book WHERE isbn = $2`;
 
-  for (i = 0; i < request.length-1; i++){
-    query = `${query}
-    INSERT INTO Book_order (order_id, isbn) VALUES ($1, $${i+2});
-    UPDATE Book SET stock = stock-1 WHERE isbn = $${i+2};`
-  }
-  client.query(query, [request], (err, res)=>{
-    if(err){
-      callback("Order cannot be placed")
-    }else{
-      console.log(res)
-      callback(res.order_id)
+    for (i = 3; i <= request.length; i++){
+      query = `${query} OR isbn = $${i}`
     }
-  })
+
+    client.query(query, request, (err, res)=>{
+      if(err){
+        callback("INVALID")
+      }else{
+        console.log(res)
+        callback(res.order_id)
+      }
+    })
+  }
 }
 
 module.exports = {

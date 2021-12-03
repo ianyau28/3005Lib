@@ -40,6 +40,7 @@ bookRouter.get("/:bid", function(req, res, next){
       }
     }
   }
+  //instead we could let them add to cart before log in. then make them log in later
   res.send(pug.renderFile("views/pages/book.pug", {book: req.book, genres: req.genres, authors: req.authors, alreadyincart: flag, logged: req.session.loggedIn}));
 });
 

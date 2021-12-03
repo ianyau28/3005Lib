@@ -14,9 +14,11 @@ app.use("/", session({secret: 'something here', loggedIn: false, user_id: '', ca
 
 const bookRouter = require("./routers/book-router");
 const userRouter = require("./routers/user-router");
+const orderRouter = require('./routers/order-router');
 
 app.use("/books", bookRouter);
 app.use("/users", userRouter);
+app.use("/orders", orderRouter);
 app.get("/dude", getBooks);
 
 app.use(express.static("public"));
