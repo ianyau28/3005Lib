@@ -39,7 +39,7 @@ create table Orders
 	(order_id		SERIAL,
 	 user_id		varchar(10),
 	 destination	varchar (50),
-	 current_location	varchar(50),
+	 status	varchar(50),
 	 date_of_order	date,
 	 primary key (order_id),
 	 foreign key (user_id) references Users

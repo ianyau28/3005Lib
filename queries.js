@@ -143,7 +143,7 @@ const getPriceOfSpecificBooks = (request, callback) =>{
 
 const addOrder = (request, callback) =>{
   console.log(request)
-  client.query(`INSERT INTO Orders (user_id, destination, current_location, date_of_order) VALUES ($1, $2, $3, $4) RETURNING order_id`, [request.user_id, request.destination, request.current_location, request.date_of_order], (err, res)=>{
+  client.query(`INSERT INTO Orders (user_id, destination, status, date_of_order) VALUES ($1, $2, $3, $4) RETURNING order_id`, [request.user_id, request.destination, request.status, request.date_of_order], (err, res)=>{
     if(err){
       callback("INVALID")
     }else{

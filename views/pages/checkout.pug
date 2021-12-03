@@ -1,0 +1,38 @@
+html
+    head
+        style
+            include ../../style.css
+    body
+      include ../partials/navbar
+
+      h1 Enter your Information:
+      p
+        form(method="post" id="personSubmission" action="/orders")
+                  
+          h4 Address:
+          input(type="text" name="address" placeholder="Address...")
+          br
+          br
+          br
+          input(type="submit" value="Submit Order")
+
+          br
+          hr
+          p Total: #{total}
+        hr
+
+        each book, index in cart
+          div.bookbrowse
+            | Title: 
+            a(href="/books/" + book.isbn) #{book.name}
+            |
+            p Price: $#{book.price}
+
+        hr
+        
+
+
+
+            
+
+
