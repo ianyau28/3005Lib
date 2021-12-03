@@ -21,13 +21,50 @@ const getBooks = (request, response) => {
 
 
 const getBooksQuery = (request, callback) => {
-  client.query(`SELECT * FROM Book WHERE name ILIKE '%' || $1 || '%'`, [request.Title], (err, res)=>{
-    if(err){
-      throw err
-    }else{
-      callback(res.rows)
+  for (const [key, value] of Object.entries(request)){
+    if (value === ''){
+      delete request[key]
     }
-  })
+  }
+  if (Object.keys(request).length === 0){
+    callback([])
+  }else{
+    console.log(request)
+    let query_params = [];
+    let index = 0;
+    let query = 'SELECT DISTINCT Book.name, Book.isbn FROM Book, Book_author, Author, Publisher WHERE Book.isbn = Book_author.isbn AND Book_author.author_id = Author.author_id AND Book.publisher_id = Publisher.publisher_id'
+
+    for (const [key, value] of Object.entries(request)){
+      index = index + 1
+      switch(key){
+        case 'title':
+          query = `${query} AND Book.name ILIKE '%' || $${index} || '%'`
+          break;
+        case 'Title':
+          query = `${query} AND Book.name ILIKE '%' || $${index} || '%'`
+          break;
+        case 'isbn':
+          query = `${query} AND Book.isbn = $${index}`
+          break;
+        case 'author_name':
+          query = `${query} AND Author.name ILIKE '%' || $${index} || '%'`
+          break;
+        case 'publisher_name':
+          query = `${query} AND Publisher.name ILIKE '%' || $${index} || '%'`
+          break;
+      }
+      query_params.push(value)
+    }
+    console.log(query)
+    console.log(query_params)
+    client.query(query, query_params, (err, res)=>{
+      if(err){
+        throw err
+      }else{
+        callback(res.rows)
+      }
+    })
+  }
 }
 
 const getBookById = (request, callback) => {
