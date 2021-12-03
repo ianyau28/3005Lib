@@ -12,7 +12,13 @@ const session = require('express-session');
 //should be post
 orderRouter.post("/", function(req, res){
   //need to be stufff
-  req.body = {user_id: req.session.userid, destination: "Some street", status: "warehouse", date_of_order: "2019-10-24"}
+  let ts = Date.now();
+  let date_ob = new Date(ts);
+  let order_date = "" + date_ob.getFullYear() + "-" + (date_ob.getMonth() + 1) + "-" +date_ob.getDate();
+  
+  console.log(order_date)
+
+  req.body = {user_id: req.session.userid, destination: req.body.address, status: "warehouse", date_of_order: order_date}
   addOrder(req.body, function(order){
     if (order == "INVALID"){
       console.log("INVALID ORDER");
