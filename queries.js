@@ -178,6 +178,16 @@ const getPriceOfSpecificBooks = (request, callback) =>{
   }
 }
 
+const getOrder = (request, callback) =>{
+  client.query(`SELECT * FROM Orders WHERE order_id = $1`, [request], (err, res)=>{
+    if(err){
+      throw(err)
+    }else{
+      callback(res.rows[0])
+    }
+  })
+}
+
 const addOrder = (request, callback) =>{
   console.log(request)
   client.query(`INSERT INTO Orders (user_id, destination, status, date_of_order) VALUES ($1, $2, $3, $4) RETURNING order_id`, [request.user_id, request.destination, request.status, request.date_of_order], (err, res)=>{
@@ -185,6 +195,16 @@ const addOrder = (request, callback) =>{
       callback("INVALID")
     }else{
       callback(res.rows[0].order_id)
+    }
+  })
+}
+
+const getOrderBooks = (request, callback) =>{
+  client.query(`SELECT Book.isbn, Book.name, Book.price FROM Orders, Book_order, Book WHERE Orders.order_id = $1 AND Orders.order_id = Book_order.order_id AND Book_order.isbn = Book.isbn`, [request], (err, res)=>{
+    if(err){
+      throw(err)
+    }else{
+      callback(res.rows)
     }
   })
 }
@@ -216,13 +236,11 @@ const updateStockAfterOrder = (request, callback) =>{
   if (request.length == 0){
     callback([])
   }else{
-    console.log(request);
-    let query =`UPDATE Book SET stock = stock-1 WHERE isbn = $1;`
+    let query =`UPDATE Book SET stock = stock-1 WHERE isbn = $1`
 
     for (i = 1; i < request.length; i++){
       query = `${query} OR isbn = $${i+1}`
     }
-
     client.query(query, request, (err, res)=>{
       if(err){
         callback("INVALID")
@@ -244,6 +262,8 @@ module.exports = {
   getUserOrders,
   getSpecificBooks,
   getPriceOfSpecificBooks,
+  getOrder,
+  getOrderBooks,
   addOrder,
   addBooksInOrder,
   updateStockAfterOrder

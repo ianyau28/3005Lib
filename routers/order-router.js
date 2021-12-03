@@ -1,7 +1,7 @@
 const express = require('express');
 const pug = require('pug');
 let orderRouter = express.Router();
-const { addOrder, addBooksInOrder, getSpecificBooks, getPriceOfSpecificBooks, updateStockAfterOrder } = require('../queries');
+const { addOrder, addBooksInOrder, getSpecificBooks, getPriceOfSpecificBooks, updateStockAfterOrder, getOrder, getOrderBooks } = require('../queries');
 const session = require('express-session');
 
 
@@ -66,6 +66,34 @@ orderRouter.get("/checkout", function(req, res){
   }else{
     res.redirect('/login.html');
   }
+});
+
+orderRouter.param("oid", function(req, res, next, oid){
+  getOrder(oid, function(order){
+    req.order = order;
+    // req.order.date_of_order = req.order.date_of_order.toString();
+    getOrderBooks(oid, function(books){
+      req.books = books
+      let price_books = []
+      for (let i = 0; i < books.length; i++){
+        price_books.push(books[i].isbn)
+      }
+      getPriceOfSpecificBooks(price_books, function(price){
+        if (price.length == 0){
+          req.price = 0.00
+        }else{
+          req.price = price[0].total_price
+        }
+        next();
+      });
+    });
+  });
+});
+
+
+orderRouter.get("/:oid", function(req, res, next){
+  console.log(req.order)
+  res.send(pug.renderFile("views/pages/orders.pug", {books: req.books, order: req.order, total: req.price}));
 });
 
 
