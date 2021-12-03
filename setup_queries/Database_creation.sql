@@ -96,3 +96,22 @@ create table Genre
 	 	on delete cascade
 	);
 	
+CREATE OR REPLACE FUNCTION restock()
+  RETURNS TRIGGER 
+  LANGUAGE PLPGSQL
+  AS
+$$
+BEGIN
+	IF NEW.stock < 10 THEN
+		 UPDATE Book set stock = stock + 91 where stock < 10;
+	END IF;
+
+	RETURN NEW;
+END; 
+$$
+
+CREATE TRIGGER book_stock_changes
+	AFTER UPDATE
+	ON Book
+	FOR EACH ROW
+	EXECUTE PROCEDURE restock();
