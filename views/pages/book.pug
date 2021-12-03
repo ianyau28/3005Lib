@@ -9,6 +9,8 @@ html
 
         p ISBN: #{book.isbn}
 
+        p Price: $#{book.price}
+
         p Pages: #{book.number_pages}
 
         p
@@ -27,12 +29,13 @@ html
             if index !== genres.length-1
                 | , 
         |
-        if !alreadyincart
-          form(method="get" action="/users/addcart/" + book.isbn)
-            input(type="submit", value="Add to cart")
-        else
-          form(method="get" action="/users/removecart/" + book.isbn)
-            input(type="submit", value="Remove from cart")
+        if logged
+          if !alreadyincart
+            form(method="get" action="/users/addcart/" + book.isbn)
+              input(type="submit", value="Add to cart")
+          else
+            form(method="get" action="/users/removecart/" + book.isbn)
+              input(type="submit", value="Remove from cart")
 
 
 

@@ -40,7 +40,7 @@ bookRouter.get("/:bid", function(req, res, next){
       }
     }
   }
-  res.send(pug.renderFile("views/pages/book.pug", {book: req.book, genres: req.genres, authors: req.authors, alreadyincart: flag}));
+  res.send(pug.renderFile("views/pages/book.pug", {book: req.book, genres: req.genres, authors: req.authors, alreadyincart: flag, logged: req.session.loggedIn}));
 });
 
 module.exports = bookRouter;
