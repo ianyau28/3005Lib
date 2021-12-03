@@ -1,7 +1,7 @@
 const express = require('express');
 const pug = require('pug');
 let orderRouter = express.Router();
-const { addOrder, addBooksInOrder, getSpecificBooks, getPriceOfSpecificBooks } = require('../queries');
+const { addOrder, addBooksInOrder, getSpecificBooks, getPriceOfSpecificBooks, updateStockAfterOrder } = require('../queries');
 const session = require('express-session');
 
 
@@ -21,18 +21,26 @@ orderRouter.post("/", function(req, res){
   req.body = {user_id: req.session.userid, destination: req.body.address, status: "warehouse", date_of_order: order_date}
   addOrder(req.body, function(order){
     if (order == "INVALID"){
-      console.log("INVALID ORDER");
+      console.log("INVALID ORDER CREATION");
       res.redirect("/users/cart");
     }else{
       req.smallbody = [order];
       req.smallbody = req.smallbody.concat(req.session.cart);
       addBooksInOrder(req.smallbody, function(order_book_list){
         if (order_book_list == "INVALID"){
-          console.log("INVALID ORDER");
+          console.log("INVALID ORDER BOOK CREATION");
           res.redirect("/users/cart");
         }else{
-          req.session.cart = [];
-          res.redirect("/users/me")
+          //we need to create a trigger for the book when stock is under 10
+          updateStockAfterOrder(req.session.cart, function(err){
+            if (err == "INVALID"){
+              console.log("INVALID STOCK");
+              res.redirect("/users/cart");
+            }else{
+              req.session.cart = [];
+              res.redirect("/users/me")
+            }
+          })
         }
       });
     }

@@ -175,6 +175,26 @@ const addBooksInOrder = (request, callback) =>{
   }
 }
 
+const updateStockAfterOrder = (request, callback) =>{
+  if (request.length == 0){
+    callback([])
+  }else{
+    console.log(request);
+    let query =`UPDATE Book SET stock = stock-1 WHERE isbn = $1;`
+
+    for (i = 1; i < request.length; i++){
+      query = `${query} OR isbn = $${i+1}`
+    }
+
+    client.query(query, request, (err, res)=>{
+      if(err){
+        callback("INVALID")
+      }else{
+        callback(res.rows)
+      }
+    })
+  }
+}
 module.exports = {
   getBooks,
   getBooksQuery,
@@ -188,5 +208,6 @@ module.exports = {
   getSpecificBooks,
   getPriceOfSpecificBooks,
   addOrder,
-  addBooksInOrder
+  addBooksInOrder,
+  updateStockAfterOrder
 }
