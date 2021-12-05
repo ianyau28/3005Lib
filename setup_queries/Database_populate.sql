@@ -8,7 +8,6 @@ delete from Publisher;
 delete from Author;
 delete from Users;
 
-
 insert into Users values ('dummy1', 'dummy1@gmail.com', '12345678901', 'dummy1pass');
 insert into Users values ('dummy2', 'dummy2@gmail.com', '12345678902', 'dummy2pass');
 insert into Users values ('dummy3', 'dummy3@gmail.com', '12345678903', 'dummy3pass');

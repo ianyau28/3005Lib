@@ -3,7 +3,7 @@ let bookRouter = express.Router();
 const path = require('path');
 const pug = require('pug');
 const session = require('express-session');
-const { getBooksQuery, getBookById, getBookAuthors, getBookGenres, getAuthors,  getPublisher, addBook, addBookAuthors, addGenres} = require('../queries');
+const { deleteBook, getBooksQuery, getBookById, getBookAuthors, getBookGenres, getAuthors,  getPublisher, addBook, addBookAuthors, addGenres} = require('../queries');
 
 bookRouter.get("/", function(req,res){
     //checks for query
@@ -41,11 +41,13 @@ bookRouter.post("/addbook", function(req, res){
       getPublisher(req.body.publisher_name, function(publisher){
         if (publisher == "INVALID" || publisher.length == 0){
           console.log("INVLID PUBLISHER")
+          res.redirect("/addBook.html")
         }else{
           req.querybody = [req.body.isbn, req.body.title, publisher[0].publisher_id, req.body.pages, req.body.price, req.body.publisher_cut, req.body.cost, req.body.stock]
           addBook(req.querybody, function(book){
             if (book == "INVALID"){
               console.log('INVALID ADD')
+              res.redirect("/addBook.html")
             }else{
               query = [req.querybody[0]]
               query = query.concat(author_ids)
@@ -53,6 +55,7 @@ bookRouter.post("/addbook", function(req, res){
               addBookAuthors(query, function(book_authors){
                 if (book_authors == "INVALID"){
                   console.log('INVALID ADD')
+                  res.redirect("/addBook.html")
                 }else{
                   addGenres(req.body.isbn, req.body.genres, function(yay){
                     res.redirect("/books/" + req.querybody[0])
@@ -66,6 +69,18 @@ bookRouter.post("/addbook", function(req, res){
       });
     }else{
       console.log("INVALID AUTHORS")
+      res.redirect("/addBook.html")
+    }
+  });
+});
+
+bookRouter.post("/deletebook", function(req, res){
+  deleteBook(req.body.isbn, function(result){
+    if(result == "INVALID"){
+      console.log("INBALID ISBN")
+    }else{
+      console.log("DELETE BOOK")
+      res.redirect("/books");
     }
   });
 });

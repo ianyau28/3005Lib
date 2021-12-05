@@ -41,7 +41,12 @@ html
               input(type="submit", value="Remove from cart")
 
 
-
+        form(method="post" id="personSubmission" action="/books/deletebook")
+                  
+          h4 Address:
+          input(type="hidden" name="isbn" value=book.isbn)
+          br
+          input(type="submit" value="DELETE BOOK")
             
 
 

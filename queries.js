@@ -53,6 +53,17 @@ function addingGenres(isbn, name) {
   })
 }
 
+const deleteBook = (request, callback) => {
+  client.query(`Delete from Book WHERE isbn = $1`, [request], (err, res)=>{
+    if(err){
+      console.log(err)
+      callback("INVALID")
+    }else{
+      callback("Success")
+    }
+  })
+}
+
 const getPublisher = (request, callback) => {
   client.query(`SELECT publisher_id FROM Publisher WHERE name ILIKE $1`, [request], (err, res)=>{
     if(err){
@@ -356,5 +367,6 @@ module.exports = {
   getAuthors,
   addBookAuthors,
   getPublisher,
-  addGenres
+  addGenres,
+  deleteBook
 }
