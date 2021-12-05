@@ -19,6 +19,90 @@ const getBooks = (request, response) => {
   })
 }
 
+const addBook = (request, callback) => {
+  client.query(`INSERT INTO Book (isbn, name, publisher_id, number_pages, price, publisher_cut, cost, stock) values ($1, $2, $3, $4, $5, $6, $7, $8)`, request, (err, res)=>{
+    if(err){
+      console.log(err)
+      callback("INVALID")
+    }else{
+      callback(res.rows)
+    }
+  })
+}
+
+async function addGenres(isbn, genres, callback) {
+  var array_of_promises = [], array_of_results = []
+  genres.forEach( genre => {
+      array_of_promises.push(addingGenres(isbn, genre));
+  });
+  array_of_results = await Promise.all(array_of_promises);
+  console.log(array_of_results)// prints populated array
+  callback("YESS")
+}
+
+function addingGenres(isbn, name) {
+  return new Promise((resolve, reject) => {
+    client.query(`INSERT INTO Genre (isbn, name) values ($1, $2)`, [isbn, name], (err, res) => {
+        if (err) {
+            console.log(err.stack)
+            reject(err)
+        } else {
+            resolve(res.rows[0])
+        }
+    })
+  })
+}
+
+const getPublisher = (request, callback) => {
+  client.query(`SELECT publisher_id FROM Publisher WHERE name ILIKE $1`, [request], (err, res)=>{
+    if(err){
+      throw err
+    }else{
+      callback(res.rows)
+    }
+  })
+}
+
+const getAuthors = (request, callback) => {
+  if (request.length == 0){
+    callback([])
+  }else{
+    query = `SELECT author_id FROM Author WHERE name ILIKE $1`
+    for (let i = 1; i < request.length; i++){
+      query = `${query} OR name ILIKE $${i+1}`
+    }
+    client.query(query, request, (err, res)=>{
+      if(err){
+        throw err
+      }else{
+        callback(res.rows)
+      }
+    })
+  }
+}
+
+const addBookAuthors = (request, callback) =>{
+  if (request.length == 1){
+    callback([])
+  }else{
+    console.log(request);
+    let query =`INSERT INTO Book_author (isbn, author_id) 
+    SELECT $1, author_id FROM author WHERE author_id = $2`;
+
+    for (i = 3; i <= request.length; i++){
+      query = `${query} OR author_id = $${i}`
+    }
+
+    client.query(query, request, (err, res)=>{
+      if(err){
+        callback("INVALID")
+      }else{
+        console.log(res)
+        callback(res.rows)
+      }
+    })
+  }
+}
 
 const getBooksQuery = (request, callback) => {
   for (const [key, value] of Object.entries(request)){
@@ -85,6 +169,7 @@ const getBookGenres = (request, callback) => {
     }
   })
 }
+
 const getBookAuthors = (request, callback) => {
   client.query(`SELECT Author.name FROM Book, Author, Book_author WHERE Book.isbn = Book_author.isbn AND Author.author_id = Book_author.author_id AND Book.isbn = $1`, [request.book.isbn], (err, res)=>{
     if(err){
@@ -266,5 +351,10 @@ module.exports = {
   getOrderBooks,
   addOrder,
   addBooksInOrder,
-  updateStockAfterOrder
+  updateStockAfterOrder,
+  addBook,
+  getAuthors,
+  addBookAuthors,
+  getPublisher,
+  addGenres
 }

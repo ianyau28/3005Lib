@@ -69,25 +69,30 @@ orderRouter.get("/checkout", function(req, res){
 });
 
 orderRouter.param("oid", function(req, res, next, oid){
-  getOrder(oid, function(order){
-    req.order = order;
-    // req.order.date_of_order = req.order.date_of_order.toString();
-    getOrderBooks(oid, function(books){
-      req.books = books
-      let price_books = []
-      for (let i = 0; i < books.length; i++){
-        price_books.push(books[i].isbn)
-      }
-      getPriceOfSpecificBooks(price_books, function(price){
-        if (price.length == 0){
-          req.price = 0.00
-        }else{
-          req.price = price[0].total_price
+  if (req.session.loggedIn){
+    //check if it belongs to that user
+    getOrder(oid, function(order){
+      req.order = order;
+      // req.order.date_of_order = req.order.date_of_order.toString();
+      getOrderBooks(oid, function(books){
+        req.books = books
+        let price_books = []
+        for (let i = 0; i < books.length; i++){
+          price_books.push(books[i].isbn)
         }
-        next();
+        getPriceOfSpecificBooks(price_books, function(price){
+          if (price.length == 0){
+            req.price = 0.00
+          }else{
+            req.price = price[0].total_price
+          }
+          next();
+        });
       });
     });
-  });
+  }else{
+    res.redirect('/login.html');
+  }
 });
 
 

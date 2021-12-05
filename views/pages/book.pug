@@ -29,6 +29,9 @@ html
             if index !== genres.length-1
                 | , 
         |
+
+        p Stock: #{book.stock}
+
         if logged
           if !alreadyincart
             form(method="get" action="/users/addcart/" + book.isbn)
