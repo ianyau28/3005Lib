@@ -55,13 +55,43 @@
             <input type="number" onfocus="this.value=''" name="stock" placeholder="Stock number..." required>
             <hr>
 
-            <!-- <h4>Genre</h4>
-            <input type="text" onfocus="this.value=''" name="Genre" value="Genres...">
-            <hr>
-            <input id="page" type="text" name="page" value="1"> -->
-        
-            <!-- creates new id in the real thing, right now it is just hard coding-->
             <button type="submit">Add Book</button>
+        </form>
+        <br>
+        <hr>
+        <hr>
+        <br>
+        <form method="post" id="advancedSearch" action="/books/addAuthor">
+          <h1>Add Author:</h1>
+          <hr>
+          <h4>Author name:</h4>
+          <input type="text" onfocus="this.value=''" name="author_name" placeholder="Name..." required>
+          
+          <button type="submit">Add Author</button>
+        </form>
+        <br>
+        <hr>
+        <hr>
+        <br>
+        <form method="post" id="advancedSearch" action="/books/addPublisher">
+          <h1>Add Publisher:</h1>
+          <hr>
+          <h4>Publisher name:</h4>
+          <input type="text" onfocus="this.value=''" name="publisher_name" placeholder="Name..." required>
+
+          <h4>Publisher address:</h4>
+          <input type="text" onfocus="this.value=''" name="publisher_address" placeholder="Address..." required>
+
+          <h4>Publisher email:</h4>
+          <input type="text" onfocus="this.value=''" name="publisher_email" placeholder="Email..." required>
+
+          <h4>Publisher phone number(s)(separate names with only a comma):</h4>
+          <input type="text" onfocus="this.value=''" name="publisher_phonenumbers" placeholder="Phone Number(s)..." required>
+
+          <h4>Publisher Bank Account:</h4>
+          <input type="text" onfocus="this.value=''" name="publisher_bank" placeholder="Bank Account..." required>
+          
+          <button type="submit">Add Publisher</button>
         </form>
     </body>
 </html>
