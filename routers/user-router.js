@@ -66,8 +66,11 @@ userRouter.get("/me", function(req, res){
     if (req.session.loggedIn){
         getUser(req.session.userid, function(user){
           getUserOrders(req.session.userid, function(orders){
-            console.log(user)
-            res.send(pug.renderFile("views/pages/ownprofile.pug", {user: user, orders: orders}));
+            let admin = false
+            if (user.user_id === 'owner'){
+              admin = true
+            }
+            res.send(pug.renderFile("views/pages/ownprofile.pug", {user: user, orders: orders, admin: admin}));
           })
         });
     }else{

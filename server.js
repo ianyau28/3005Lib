@@ -19,7 +19,6 @@ const orderRouter = require('./routers/order-router');
 app.use("/books", bookRouter);
 app.use("/users", userRouter);
 app.use("/orders", orderRouter);
-app.get("/dude", getBooks);
 
 app.use(express.static("public"));
 

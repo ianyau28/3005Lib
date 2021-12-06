@@ -17,6 +17,15 @@ bookRouter.get("/", function(req,res){
     }
 });
 
+bookRouter.get("/addBook", function(req,res){
+  //checks for query
+  if (req.session.userid === "owner"){
+    res.send(pug.renderFile("views/pages/addBook.pug", {}));
+  }else{
+    res.redirect("/login.html");
+  }
+});
+
 bookRouter.get("/genres", function(req,res){
   //checks for query
   genres = ["hello there", "goodbye", "yeeter"]
@@ -41,13 +50,13 @@ bookRouter.post("/addbook", function(req, res){
       getPublisher(req.body.publisher_name, function(publisher){
         if (publisher == "INVALID" || publisher.length == 0){
           console.log("INVLID PUBLISHER")
-          res.redirect("/addBook.html")
+          res.redirect("/books/addBook")
         }else{
           req.querybody = [req.body.isbn, req.body.title, publisher[0].publisher_id, req.body.pages, req.body.price, req.body.publisher_cut, req.body.cost, req.body.stock]
           addBook(req.querybody, function(book){
             if (book == "INVALID"){
               console.log('INVALID ADD')
-              res.redirect("/addBook.html")
+              res.redirect("/books/addBook")
             }else{
               query = [req.querybody[0]]
               query = query.concat(author_ids)
@@ -55,7 +64,7 @@ bookRouter.post("/addbook", function(req, res){
               addBookAuthors(query, function(book_authors){
                 if (book_authors == "INVALID"){
                   console.log('INVALID ADD')
-                  res.redirect("/addBook.html")
+                  res.redirect("/books/addBook")
                 }else{
                   addGenres(req.body.isbn, req.body.genres, function(yay){
                     res.redirect("/books/" + req.querybody[0])
@@ -69,7 +78,7 @@ bookRouter.post("/addbook", function(req, res){
       });
     }else{
       console.log("INVALID AUTHORS")
-      res.redirect("/addBook.html")
+      res.redirect("/books/addBook")
     }
   });
 });
@@ -89,28 +98,41 @@ bookRouter.param("bid", function(req, res, next, bid){
   req.isbn = bid;
   getBookById(req, function(book){
     req.book = book[0];
-    getBookAuthors(req, function(authors){
-      req.authors = authors;
-      getBookGenres(req, function(genres){
-        req.genres = genres;
-        next();
+    if (book.length === 0){
+      req.isbn = "INVALID"
+      next()
+    }else{
+      getBookAuthors(req, function(authors){
+        req.authors = authors;
+        getBookGenres(req, function(genres){
+          req.genres = genres;
+          next();
+        })
       })
-    })
+    }
   });
 });
 
 
 bookRouter.get("/:bid", function(req, res, next){
-  let flag = false;
-  if (req.session.cart != null){
-    for (let i = 0; i<req.session.cart.length; i++){
-      if (req.session.cart[i] === req.book.isbn){
-        flag = true
+  let admin = false;
+  if (req.isbn === "INVALID"){
+    res.redirect("/books")
+  }else{
+    if (req.session.userid === "owner"){
+      admin = true;
+    }
+    let flag = false;
+    if (req.session.cart != null){
+      for (let i = 0; i<req.session.cart.length; i++){
+        if (req.session.cart[i] === req.book.isbn){
+          flag = true
+        }
       }
     }
+    //instead we could let them add to cart before log in. then make them log in later
+    res.send(pug.renderFile("views/pages/book.pug", {book: req.book, genres: req.genres, authors: req.authors, alreadyincart: flag, logged: req.session.loggedIn, admin: admin}));
   }
-  //instead we could let them add to cart before log in. then make them log in later
-  res.send(pug.renderFile("views/pages/book.pug", {book: req.book, genres: req.genres, authors: req.authors, alreadyincart: flag, logged: req.session.loggedIn}));
 });
 
 module.exports = bookRouter;

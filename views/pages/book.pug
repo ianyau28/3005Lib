@@ -40,13 +40,11 @@ html
             form(method="get" action="/users/removecart/" + book.isbn)
               input(type="submit", value="Remove from cart")
 
-
-        form(method="post" id="personSubmission" action="/books/deletebook")
-                  
-          h4 Address:
-          input(type="hidden" name="isbn" value=book.isbn)
-          br
-          input(type="submit" value="DELETE BOOK")
+        if admin
+          form(method="post" id="personSubmission" action="/books/deletebook")      
+            input(type="hidden" name="isbn" value=book.isbn)
+            br
+            input(type="submit" value="DELETE BOOK")
             
 
 

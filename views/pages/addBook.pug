@@ -1,0 +1,80 @@
+html
+    head
+        style
+            include ../../style.css
+    body
+        include ../partials/navbar
+
+        form(method="post" id="personSubmission" action="/books/addBook")
+                  
+          h1 Add Book:
+          hr
+          h4 Book ISBN:
+          input(type="text" name="isbn" placeholder="ISBN..." required)
+
+          h4 Book Title:
+          input(type="text" name="title" placeholder="Title..." required)
+
+          h4 Genres (separate names with only a comma):
+          input(type="text" name="genre_name" placeholder="Genres..." required)
+
+          h4 Author Names (separate names with only a comma):
+          input(type="text" name="author_name" placeholder="Author Names..." required)
+
+          h4 Pages:
+          input(type="number" name="pages" placeholder="Pages..." required)
+
+          h4 Publisher Name:
+          input(type="text" name="publisher_name" placeholder="Publisher Name..." required)
+
+          h4 Publisher cut:
+          input(type="number" name="publisher_cut"  step=".001" placeholder="Publisher Cut..." required)
+
+          h4 Price:
+          input(type="number" name="price" step=".01" placeholder="Price..." required)
+
+          h4 Cost:
+          input(type="number" name="cost" step=".01" placeholder="Cost..." required)
+
+          h4 Stock:
+          input(type="number" name="stock" placeholder="Stock..." required)
+          br
+          
+          input(type="submit" value="Add Book")
+        hr
+
+        form(method="post" id="personSubmission" action="/books/addAuthor")
+                  
+          h1 Add Author:
+          hr
+          h4 Author Name:
+          input(type="text" name="author_name" placeholder="Name..." required)
+          br
+          input(type="submit" value="Add Author")
+        hr
+
+        form(method="post" id="personSubmission" action="/books/addPublisher")
+                  
+          h1 Add Publisher:
+          hr
+          h4 Publisher name:
+          input(type="text" name="publisher_name" placeholder="Name..." required)
+
+          h4 Publisher address:
+          input(type="text" name="publisher_address" placeholder="Address..." required)
+
+          h4 Publisher email:
+          input(type="text" name="publisher_email" placeholder="Email..." required)
+          
+          h4 Publisher phone number(s)(separate names with only a comma):
+          input(type="text" name="publisher_phonenumbers" placeholder="Phone Number(s)..." required)
+
+          h4 Publisher Bank Account:
+          input(type="text" name="publisher_bank" placeholder="Bank Account..." required)
+          br
+
+          input(type="submit" value="Add Book")
+        hr
+            
+
+

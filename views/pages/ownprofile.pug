@@ -14,6 +14,11 @@ html
 
         hr
 
+        if admin
+            a(class='button' href='/books/addBook') Add Book
+            br
+            hr
+
         | Orders:
 
         each order, index in orders
