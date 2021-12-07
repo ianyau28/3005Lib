@@ -129,3 +129,6 @@ CREATE OR REPLACE View sales_by_publisher AS
 select publisher.name, book.price, orders.date_of_order, book.cost, book.publisher_cut from orders, book_order, book, publisher
 WHERE orders.order_id = book_order.order_id AND book_order.isbn = book.isbn AND book.publisher_id = publisher.publisher_id;
 
+CREATE OR REPLACE View total_sales AS
+select book.price, orders.date_of_order, book.cost, book.publisher_cut from orders, book_order, book, publisher
+WHERE orders.order_id = book_order.order_id AND book_order.isbn = book.isbn;

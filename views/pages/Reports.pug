@@ -8,10 +8,19 @@ html
           h1 #{title}
           p
             div
-              each obj in report
-                  div.bookbrowse
-                      div.books
-                          p #{topic}: #{obj.name}
-                          p Orders: #{obj.orders}
-                          p Profit: $#{obj.profit}
+              if topic != 'Total'
+                each obj in report
+                    div.bookbrowse
+                        div.books
+                            p #{topic}: #{obj.name}
+                            p Orders: #{obj.orders}
+                            p Profit: $#{obj.profit}
+              else
+                div.bookbrowse
+                  div.books
+                    p Products Sold: #{report[0].products_sold}
+                    p Sales Total: $#{report[0].sales}
+                    p Expensise: $#{report[0].expensise}
+                    p Total Profit: $#{report[0].profit}
+
                                 

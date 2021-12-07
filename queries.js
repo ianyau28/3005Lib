@@ -395,6 +395,21 @@ const getSalesByPublisher = (request, callback) =>{
   }
 }
 
+const getTotalSales = (request, callback) =>{
+  if (request.length <= 1){
+    callback([])
+  }else{
+    client.query(`Select Count(*) AS products_sold, Sum(price) AS sales, Sum(cost) As expensise, SUM((price - cost)*(1-publisher_cut)) As profit from total_sales
+    where date_of_order between $1 AND $2`, request, (err, res)=>{
+      if(err){
+        callback("INVALID")
+      }else{
+        callback(res.rows)
+      }
+    })
+  }
+}
+
 module.exports = {
   getBooks,
   getBooksQuery,
@@ -420,5 +435,6 @@ module.exports = {
   deleteBook,
   getSalesByAuthor,
   getSalesByGenre,
-  getSalesByPublisher
+  getSalesByPublisher,
+  getTotalSales
 }

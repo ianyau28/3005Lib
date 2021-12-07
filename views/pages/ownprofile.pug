@@ -60,6 +60,19 @@ html
                     br
                     br
                     input(type = "submit" id="search" value="Search")
+            br
+            div
+                h4 Total Report:
+                form(action= '/users/reports', id="personSubmission", method="GET")
+                    p Start Date:
+                    input(type="text" onfocus="this.value=''" id="searchbar" name="start_date" placeholder="Enter a start date...")
+                    br
+                    p End Date:
+                    input(type="text" onfocus="this.value=''" id="searchbar" name="end_date" placeholder="Enter an end date...")
+                    input(type="hidden" onfocus="this.value=''" id="searchbar" name="type" value="Total Report" )
+                    br
+                    br
+                    input(type = "submit" id="search" value="Search")
             hr
 
         | Orders:

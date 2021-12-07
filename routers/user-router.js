@@ -1,7 +1,7 @@
 const express = require('express');
 const pug = require('pug');
 let userRouter = express.Router();
-const { addUser, login, getUser, getUserOrders, getSpecificBooks, getPriceOfSpecificBooks, getSalesByAuthor, getSalesByPublisher, getSalesByGenre } = require('../queries');
+const { addUser, login, getUser, getUserOrders, getSpecificBooks, getPriceOfSpecificBooks, getSalesByAuthor, getSalesByPublisher, getSalesByGenre, getTotalSales } = require('../queries');
 const session = require('express-session');
 
 
@@ -146,18 +146,39 @@ userRouter.get("/reports", function(req, res){
       switch(req.query.type){
         case 'Publisher Report':
           getSalesByPublisher([req.query.start_date, req.query.end_date], function(values){
-            console.log(values)
+            for (let i =0; i < values.length; i++){
+              values[i].profit = parseFloat(values[i].profit).toFixed(2)
+            }
             res.send(pug.renderFile("views/pages/Reports.pug", {report: values, title: req.query.type, topic: "Publisher"}));
           })
           break;
         case 'Author Report':
           getSalesByAuthor([req.query.start_date, req.query.end_date], function(values){
+            for (let i =0; i < values.length; i++){
+              values[i].profit = parseFloat(values[i].profit).toFixed(2)
+            }
             res.send(pug.renderFile("views/pages/Reports.pug", {report: values, title: req.query.type, topic: "Author"}));
           })
           break;
         case 'Genre Report':
           getSalesByGenre([req.query.start_date, req.query.end_date], function(values){
+            for (let i =0; i < values.length; i++){
+              values[i].profit = parseFloat(values[i].profit).toFixed(2)
+            }
             res.send(pug.renderFile("views/pages/Reports.pug", {report: values, title: req.query.type, topic: "Genre"}));
+          })
+          break;
+        case 'Total Report':
+          getTotalSales([req.query.start_date, req.query.end_date], function(values){
+            if (values.length === 0){
+              values[0].sales = 0.00
+              values[0].expensise = 0.00
+              values[0].profit = 0.00
+            }
+            values[0].sales = parseFloat(values[0].sales).toFixed(2)
+            values[0].expensise = parseFloat(values[0].expensise).toFixed(2)
+            values[0].profit = parseFloat(values[0].profit).toFixed(2)
+            res.send(pug.renderFile("views/pages/Reports.pug", {report: values, title: req.query.type, topic: "Total"}));
           })
           break;
         default:
