@@ -26,14 +26,14 @@ bookRouter.get("/addBook", function(req,res){
   }
 });
 
-bookRouter.get("/genres", function(req,res){
-  //checks for query
-  genres = ["hello there", "goodbye", "yeeter"]
-  addGenres(1, genres, function(yay){
-    console.log(yay);
-    console.log("we DID IT")
-  })
-});
+// bookRouter.get("/genres", function(req,res){
+//   //checks for query
+//   genres = ["hello there", "goodbye", "yeeter"]
+//   addGenres(1, genres, function(yay){
+//     console.log(yay);
+//     console.log("we DID IT")
+//   })
+// });
 
 bookRouter.post("/addbook", function(req, res){
   //need to be stufff
