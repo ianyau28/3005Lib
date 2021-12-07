@@ -346,6 +346,55 @@ const updateStockAfterOrder = (request, callback) =>{
     })
   }
 }
+
+const getSalesByAuthor = (request, callback) =>{
+  if (request.length <= 1){
+    callback([])
+  }else{
+    client.query(`Select name, Count(*) As orders, SUM((price - cost)*(1-publisher_cut)) As profit from sales_by_author
+    where date_of_order between $1 AND $2
+    group by name`, request, (err, res)=>{
+      if(err){
+        callback("INVALID")
+      }else{
+        callback(res.rows)
+      }
+    })
+  }
+}
+
+const getSalesByGenre = (request, callback) =>{
+  if (request.length <= 1){
+    callback([])
+  }else{
+    client.query(`Select name, Count(*) As orders, SUM((price - cost)*(1-publisher_cut)) As profit from sales_by_genre
+    where date_of_order between $1 AND $2
+    group by name`, request, (err, res)=>{
+      if(err){
+        callback("INVALID")
+      }else{
+        callback(res.rows)
+      }
+    })
+  }
+}
+
+const getSalesByPublisher = (request, callback) =>{
+  if (request.length <= 1){
+    callback([])
+  }else{
+    client.query(`Select name, Count(*) As orders, SUM((price - cost)*(1-publisher_cut)) As profit from sales_by_publisher
+    where date_of_order between $1 AND $2
+    group by name`, request, (err, res)=>{
+      if(err){
+        callback("INVALID")
+      }else{
+        callback(res.rows)
+      }
+    })
+  }
+}
+
 module.exports = {
   getBooks,
   getBooksQuery,
@@ -368,5 +417,8 @@ module.exports = {
   addBookAuthors,
   getPublisher,
   addGenres,
-  deleteBook
+  deleteBook,
+  getSalesByAuthor,
+  getSalesByGenre,
+  getSalesByPublisher
 }

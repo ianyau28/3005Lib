@@ -177,3 +177,23 @@ insert into Genre values ('9781481444422', 'Young Adult');
 insert into Genre values ('9781481444422', 'Fantasy');
 insert into Genre values ('9781481444422', 'Action');
 insert into Genre values ('9781481444422', 'Adventure');
+
+
+insert into Orders(user_id, destination, status, date_of_order) values ('dummy1', 'Destination 1', 'Arrived', '2021-11-09');
+insert into Orders(user_id, destination, status, date_of_order) values ('dummy1', 'Destination 1', 'Arrived', '2021-11-20');
+insert into Orders(user_id, destination, status, date_of_order) values ('dummy1', 'Destination 1', 'Progress', '2021-11-25');
+insert into Orders(user_id, destination, status, date_of_order) values ('dummy1', 'Destination 1', 'Progress', '2021-11-30');
+insert into Orders(user_id, destination, status, date_of_order) values ('dummy1', 'Destination 1', 'Warehouse', '2021-12-05');
+
+insert into Book_order values (1, '9780747532743');
+insert into Book_order values (1, '9780195798760');
+insert into Book_order values (1, '9780317456394');
+insert into Book_order values (1, '9780195799163');
+insert into Book_order values (2, '9781423140597');
+insert into Book_order values (2, '9781423140603');
+insert into Book_order values (2, '9781423146728');
+insert into Book_order values (3, '9781416955078');
+insert into Book_order values (3, '9781416972242');
+insert into Book_order values (3, '9781442403543');
+insert into Book_order values (4, '9781481444422');
+

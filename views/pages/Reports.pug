@@ -1,0 +1,17 @@
+html
+    head
+        style
+            include ../../style.css
+    body
+        include ../partials/navbar
+        div.banner
+          h1 #{title}
+          p
+            div
+              each obj in report
+                  div.bookbrowse
+                      div.books
+                          p #{topic}: #{obj.name}
+                          p Orders: #{obj.orders}
+                          p Profit: $#{obj.profit}
+                                

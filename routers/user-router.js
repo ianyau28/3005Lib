@@ -1,7 +1,7 @@
 const express = require('express');
 const pug = require('pug');
 let userRouter = express.Router();
-const { addUser, login, getUser, getUserOrders, getSpecificBooks, getPriceOfSpecificBooks } = require('../queries');
+const { addUser, login, getUser, getUserOrders, getSpecificBooks, getPriceOfSpecificBooks, getSalesByAuthor, getSalesByPublisher, getSalesByGenre } = require('../queries');
 const session = require('express-session');
 
 
@@ -137,52 +137,36 @@ userRouter.get("/cart", function(req, res){
   }
 });
 
-
-// userRouter.post("/me/:mid", function(req, res){
-//     //console.log(req.session.userid);
-//     //console.log(req.params.mid);
-//     data.addToWatchlist(req.session.userid, req.params.mid, function(user){
-//         //console.log(user);
-//         res.redirect("/users/me");
-//     });
-    
-// });
-
-
-// userRouter.param("uid", function(req, res, next, uid){
-//     //here we should parse and also figure out if that person exists
-//     req.uid = uid;
-//     next();
-    
-// });
-// userRouter.get("/:uid", function(req, res, next){
-//     data.getUser(req.uid, function(user){
-//         req.user = user;
-//         let reviews = [];
-//         req.people = {};
-//         req.watch = {};
-//         req.users = {};
-//         console.log(req.user);
-//         console.log(req.user.Reviews);
-//         data.getListReview(req.user.Reviews, function(reviews){
-//             req.reviews = reviews;
-//             console.log(req.user.Following_People);
-//             data.getListPerson(req.user.Following_People, function(people){
-//                 req.people = people;
-//                 console.log(req.user.Watchlist);
-//                 data.getListMovie(req.user.Watchlist, function(watch){
-//                     req.watch = watch;
-//                     console.log(req.user.Following_Users);
-//                     data.getListUser(req.user.Following_Users, function(user){
-//                         req.users = user;
-//                         res.send(pug.renderFile("views/pages/profile.pug", {user: req.user, followuser: req.users, followpeople: req.people, watchlist: req.watch, reviews: req.reviews}));
-//                     })
-//                 })
-//             })
-//         });
-//     })
-
-// });
-
+userRouter.get("/reports", function(req, res){
+  if (req.session.userid === "owner"){
+    if (Object.keys(req.query).length === 0){
+      res.redirect("/users/me");
+    }else{
+      console.log(req.query)
+      switch(req.query.type){
+        case 'Publisher Report':
+          getSalesByPublisher([req.query.start_date, req.query.end_date], function(values){
+            console.log(values)
+            res.send(pug.renderFile("views/pages/Reports.pug", {report: values, title: req.query.type, topic: "Publisher"}));
+          })
+          break;
+        case 'Author Report':
+          getSalesByAuthor([req.query.start_date, req.query.end_date], function(values){
+            res.send(pug.renderFile("views/pages/Reports.pug", {report: values, title: req.query.type, topic: "Author"}));
+          })
+          break;
+        case 'Genre Report':
+          getSalesByGenre([req.query.start_date, req.query.end_date], function(values){
+            res.send(pug.renderFile("views/pages/Reports.pug", {report: values, title: req.query.type, topic: "Genre"}));
+          })
+          break;
+        default:
+          res.redirect("/users/me");
+      }
+    }
+  }else{
+    res.redirect("/users/me");
+  }
+});
 
 module.exports = userRouter;
