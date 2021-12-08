@@ -4,12 +4,9 @@ drop table phone_numbers;
 drop table Book_author;
 drop table Orders;
 drop table Book;
-
-
 drop table Publisher;
 drop table Author;
 drop table Users;
-
 
 create table Author
 	(author_id		SERIAL,
@@ -95,27 +92,6 @@ create table Genre
 	foreign key (ISBN) references Book
 	 	on delete cascade
 	);
-	
-CREATE OR REPLACE FUNCTION restock()
-  RETURNS TRIGGER 
-  LANGUAGE PLPGSQL
-  AS
-$$
-BEGIN
-	IF NEW.stock < 10 THEN
-		 UPDATE Book set stock = stock + 91 where stock < 10;
-	END IF;
-
-	RETURN NEW;
-END; 
-$$
-
-CREATE TRIGGER book_stock_changes
-	AFTER UPDATE
-	ON Book
-	FOR EACH ROW
-	EXECUTE PROCEDURE restock();
-
 
 CREATE OR REPLACE View sales_by_author AS
 select Author.name, book.price, orders.date_of_order, book.cost, book.publisher_cut from orders, book_order, book, Book_author, Author
