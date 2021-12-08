@@ -14,13 +14,13 @@ html
                         div.books
                             p #{topic}: #{obj.name}
                             p Orders: #{obj.orders}
-                            p Profit: $#{obj.profit}
+                            p Profit: $#{obj.profit} (found by subtracting the cost and publisher cut from the price of books sold)
               else
                 div.bookbrowse
                   div.books
                     p Products Sold: #{report[0].products_sold}
-                    p Sales Total: $#{report[0].sales}
-                    p Expenses: $#{report[0].expensise}
-                    p Total Profit: $#{report[0].profit}
+                    p Sales Total: $#{report[0].sales} (found using the price of books)
+                    p Expenses: $#{report[0].expensise} (found using cost of books)
+                    p Total Profit: $#{report[0].profit} (found by subtracting the cost and publisher cut from the price of books sold)
 
                                 
