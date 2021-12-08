@@ -1,7 +1,7 @@
 const express = require('express');
 const pug = require('pug');
 let orderRouter = express.Router();
-const { addOrder, addBooksInOrder, getSpecificBooks, getPriceOfSpecificBooks, updateStockAfterOrder, getOrder, getOrderBooks } = require('.../Queries/queries');
+const { addOrder, addBooksInOrder, getSpecificBooks, getPriceOfSpecificBooks, updateStockAfterOrder, getOrder, getOrderBooks } = require('../Queries/queries');
 const session = require('express-session');
 
 
