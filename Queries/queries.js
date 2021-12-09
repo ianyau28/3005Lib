@@ -420,6 +420,51 @@ const getTotalSales = (request, callback) =>{
   }
 }
 
+const addAuthor = (request, callback) =>{
+  console.log(request)
+  client.query(`INSERT INTO Author(name, email) values ($1, $2)`, request, (err, res)=>{
+    if(err){
+      callback("INVALID")
+    }else{
+      callback("Good")
+    }
+  })
+}
+
+const addPublisher = (request, callback) =>{
+  console.log(request)
+  client.query(`INSERT INTO Publisher(name, address, email_address, banking_account) values ($1, $2, $3, $4) RETURNING publisher_id`, request, (err, res)=>{
+    if(err){
+      callback("INVALID")
+    }else{
+      callback(res.rows[0].publisher_id)
+    }
+  })
+}
+
+async function addPhonenumbers(publisher_id, phonenumbers, callback) {
+  var array_of_promises = [], array_of_results = []
+  phonenumbers.forEach( phonenum => {
+      array_of_promises.push(addingPhonenumbers(publisher_id, phonenum));
+  });
+  array_of_results = await Promise.all(array_of_promises);
+  console.log(array_of_results)// prints populated array
+  callback()
+}
+
+function addingPhonenumbers(publisher_id, phonenum) {
+  return new Promise((resolve, reject) => {
+    client.query(`INSERT INTO phone_numbers (publisher_id, phone_number) values ($1, $2)`, [publisher_id, phonenum], (err, res) => {
+        if (err) {
+            console.log(err.stack)
+            reject(err)
+        } else {
+            resolve(res.rows[0])
+        }
+    })
+  })
+}
+
 module.exports = {
   getBooks,
   getBooksQuery,
@@ -447,5 +492,8 @@ module.exports = {
   getSalesByGenre,
   getSalesByPublisher,
   getTotalSales,
-  getPublisherByID
+  getPublisherByID,
+  addAuthor,
+  addPublisher,
+  addPhonenumbers
 }

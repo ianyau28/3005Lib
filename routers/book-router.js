@@ -3,7 +3,7 @@ let bookRouter = express.Router();
 const path = require('path');
 const pug = require('pug');
 const session = require('express-session');
-const { deleteBook, getBooksQuery, getBookById, getBookAuthors, getBookGenres, getAuthors,  getPublisher, addBook, addBookAuthors, addGenres, getPublisherByID} = require('../Queries/queries');
+const { deleteBook, getBooksQuery, getBookById, getBookAuthors, getBookGenres, getAuthors,  getPublisher, addBook, addBookAuthors, addGenres, getPublisherByID, addAuthor, addPublisher, addPhonenumbers} = require('../Queries/queries');
 
 
 bookRouter.get("/", function(req,res){
@@ -91,6 +91,35 @@ bookRouter.post("/deletebook", function(req, res){
     }else{
       console.log("DELETE BOOK")
       res.redirect("/books");
+    }
+  });
+});
+
+bookRouter.post("/addAuthor", function(req, res){
+  //add Author to the database
+  addAuthor([req.body.author_name, req.body.author_email], function(result){
+    if(result == "INVALID"){
+      console.log("INBALID INSERT")
+      res.redirect("/books/addBook")
+    }else{
+      console.log("Good!")
+      res.redirect("/books/addBook");
+    }
+  });
+});
+
+bookRouter.post("/addPublisher", function(req, res){
+  //add Publisher to the database
+  addPublisher([req.body.publisher_name, req.body.publisher_address, req.body.publisher_email, req.body.publisher_bank], function(result){
+    if(result == "INVALID"){
+      console.log("INBALID INSERT")
+      res.redirect("/books/addBook")
+    }else{
+      req.body.phonenumbers = req.body.publisher_phonenumbers.split(",")
+      addPhonenumbers(result, req.body.phonenumbers, function(){
+        console.log("Good!");
+        res.redirect("/books/addBook");
+      })
     }
   });
 });

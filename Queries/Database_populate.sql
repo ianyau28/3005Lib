@@ -19,10 +19,10 @@ insert into Author(name, email) values ('Suzanne Collins', 'info@suzannecollins.
 insert into Author(name, email) values ('Rick Riordan', 'info@rickriordan.com');
 insert into Author(name, email) values ('Cassandra Clare', 'info@cassandraclare.com');
 
-insert into Publisher values (1, 'Bloomsbury Publishing', '31 Bedford Avenue, London', 'bloomsbury@gmail.com', 'bloomsburybankaccount');
-insert into Publisher values (2, 'Scholastic Press', '557 Broadway New York, NY', 'scholastic@gmail.com', 'scholasticbankaccount');
-insert into Publisher values (3, 'Disney Books', '125 West End Avenue New York, NY', 'disneybooks@gmail.com', 'disneybooksbankaccount');
-insert into Publisher values (4, 'Margaret K. McElderry', '1230 Avenue of the Americas New York, NY', 'margaret@gmail.com', 'margaretbankaccount');
+insert into Publisher(name, address, email_address, banking_account) values ('Bloomsbury Publishing', '31 Bedford Avenue, London', 'bloomsbury@gmail.com', 'bloomsburybankaccount');
+insert into Publisher(name, address, email_address, banking_account) values('Scholastic Press', '557 Broadway New York, NY', 'scholastic@gmail.com', 'scholasticbankaccount');
+insert into Publisher(name, address, email_address, banking_account) values('Disney Books', '125 West End Avenue New York, NY', 'disneybooks@gmail.com', 'disneybooksbankaccount');
+insert into Publisher(name, address, email_address, banking_account) values('Margaret K. McElderry', '1230 Avenue of the Americas New York, NY', 'margaret@gmail.com', 'margaretbankaccount');
 
 insert into Book values ('9780747532743', 'Harry Potter and the Phliosophers Stone', 1, '223', '15.00', '0.02', '10.00', '100');
 insert into Book values ('9780195798760', 'Harry Potter and the Chamber of Secrets', 1, '251', '15.00', '0.02', '10.00', '100');
