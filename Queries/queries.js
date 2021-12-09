@@ -74,6 +74,16 @@ const getPublisher = (request, callback) => {
   })
 }
 
+const getPublisherByID = (request, callback) => {
+  client.query(`SELECT name FROM Publisher WHERE publisher_id = $1`, [request], (err, res)=>{
+    if(err){
+      throw err
+    }else{
+      callback(res.rows)
+    }
+  })
+}
+
 const getAuthors = (request, callback) => {
   if (request.length == 0){
     callback([])
@@ -436,5 +446,6 @@ module.exports = {
   getSalesByAuthor,
   getSalesByGenre,
   getSalesByPublisher,
-  getTotalSales
+  getTotalSales,
+  getPublisherByID
 }

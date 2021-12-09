@@ -3,7 +3,7 @@ let bookRouter = express.Router();
 const path = require('path');
 const pug = require('pug');
 const session = require('express-session');
-const { deleteBook, getBooksQuery, getBookById, getBookAuthors, getBookGenres, getAuthors,  getPublisher, addBook, addBookAuthors, addGenres} = require('../Queries/queries');
+const { deleteBook, getBooksQuery, getBookById, getBookAuthors, getBookGenres, getAuthors,  getPublisher, addBook, addBookAuthors, addGenres, getPublisherByID} = require('../Queries/queries');
 
 
 bookRouter.get("/", function(req,res){
@@ -108,10 +108,14 @@ bookRouter.param("bid", function(req, res, next, bid){
       //queries for the book authors
       getBookAuthors(req, function(authors){
         req.authors = authors;
-        //queries for the genres
-        getBookGenres(req, function(genres){
-          req.genres = genres;
-          next();
+        //query to get publisher name
+        getPublisherByID(req.book.publisher_id, function(publisher){
+          req.publisher = publisher[0].name;
+          //queries for the genres
+          getBookGenres(req, function(genres){
+            req.genres = genres;
+            next();
+          })
         })
       })
     }
@@ -138,7 +142,7 @@ bookRouter.get("/:bid", function(req, res, next){
       }
     }
     //create the book page
-    res.send(pug.renderFile("views/pages/book.pug", {book: req.book, genres: req.genres, authors: req.authors, alreadyincart: flag, logged: req.session.loggedIn, admin: admin}));
+    res.send(pug.renderFile("views/pages/book.pug", {book: req.book, genres: req.genres, authors: req.authors, publisher: req.publisher, alreadyincart: flag, logged: req.session.loggedIn, admin: admin}));
   }
 });
 
